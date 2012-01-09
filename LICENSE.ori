@@ -1,9 +1,4 @@
-This work is derived from Richard Crowley's work on pip provider.
-
-Wayfair's modification to this project, which are contained in the file easypip.rb,
-are subject to the following license:
-
-Copyright 2011 Wayfair LLC. All rights reserved.
+Copyright 2011 Richard Crowley. All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions are
@@ -17,11 +12,10 @@ met:
         disclaimer in the documentation and/or other materials provided
         with the distribution.
 
-
-THIS SOFTWARE IS PROVIDED BY WAYFAIR LLC ``AS IS'' AND ANY EXPRESS
+THIS SOFTWARE IS PROVIDED BY RICHARD CROWLEY ``AS IS'' AND ANY EXPRESS
 OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
 WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-DISCLAIMED. IN NO EVENT SHALL WAYFAIR LLC OR CONTRIBUTORS BE LIABLE
+DISCLAIMED. IN NO EVENT SHALL RICHARD CROWLEY OR CONTRIBUTORS BE LIABLE
 FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
 CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
 SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
@@ -32,4 +26,4 @@ THE POSSIBILITY OF SUCH DAMAGE.
 
 The views and conclusions contained in the software and documentation
 are those of the authors and should not be interpreted as representing
-official policies, either expressed or implied, of Wayfair LLC.
+official policies, either expressed or implied, of Richard Crowley.

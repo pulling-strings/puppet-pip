@@ -42,9 +42,10 @@ Puppet::Type.type(:package).provide(:easypip,
     end
 
     def query
-        if !(@resource[:source] =~ /http:\/\/csn-mgmt.csnzoo.com\/tb\/packages\/egg*/)
-          raise Puppet::Error, "Trying to fetch from invalid domain"
-        end
+       # We have following three line to restrict the download only from our local repository
+       # if !(@resource[:source] =~ /http:\/\/myinternaldomain.com\/my\/egg\/root*/)
+       #   raise Puppet::Error, "Trying to fetch from invalid domain"
+       # end
 
         packages=self.class.instances
         return nil unless packages != nil

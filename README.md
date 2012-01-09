@@ -1,28 +1,27 @@
-puppet-pip
-==========
-
-Puppet provider of Python packages via `pip`.  Alliteration FTW.
+puppet-pip with Wayfair modifications
+=====================================
+Alteration of orginal pip provider to use easy_install for installation.
 
 * Puppet: <https://github.com/puppetlabs/puppet>
-* Puppet `apt` package provider: <https://github.com/puppetlabs/puppet/blob/master/lib/puppet/provider/package/apt.rb>
-* `pip`: <http://pip.openplans.org/>
+* An operating-system-level package provider such as 'apt', 'yum' or 'pkg'
+* pip: <http://pip.openplans.org/>
+* setuptools: <http://pypi.python.org/packages/2.3/s/setuptools/>
 * PyPI: <http://pypi.python.org/pypi>
 
 Installation
 ------------
 
-	gem install puppet-pip
+    We are not seeing that 'gem install puppet-pip' works for this project, but
+    that's not how we install puppet providers anyway.
+    You can take easypip.rb and place it in an appropriate place in the puppet tree.
 
 Example
 -------
 
 Resource:
 
-	package { "httplib2":
-		ensure => latest,
-		provider => pip,
-	}
-
-Usage:
-
-	sudo env RUBYLIB="$GEM_HOME/1.8/gems/puppet-pip-0.0.5/lib" puppet apply test.pp
+	package { "virtualenv":
+		      ensure  => present,
+              source  => "http://pypi.python.org/packages/source/v/virtualenv/virtualenv-1.7.tar.gz",
+              provider => "easypip",
+    }
