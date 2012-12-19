@@ -7,7 +7,7 @@ Puppet::Type.type(:package).provide(:easypip,
 
     has_feature :ensurable,:versionable
 
-    commands:easy_install=>"/usr/local/bin/easy_install"
+    commands:easy_install=>"/usr/bin/easy_install"
     desc "Python packages Installation via `easy_install` and Uninstallation via 'pip'."
 
     # Parse lines of output from `pip freeze`, which are structured as
@@ -66,7 +66,7 @@ Puppet::Type.type(:package).provide(:easypip,
       args = %w{-v}
       name = @resource[:name]
 
-      source = @resource[:source] + @resource[:name] + "-py2.7.egg";
+      source = @resource[:name] 
       case @resource[:ensure]
         when String
           args << source
