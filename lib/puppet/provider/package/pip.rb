@@ -9,7 +9,7 @@ Puppet::Type.type(:package).provide :pip,
 
   desc "Python packages via `pip`."
 
-  has_feature :installable, :uninstallable, :upgradeable, :versionable
+  has_feature :installable, :uninstallable, :upgradeable, :versionable, :install_options
 
   # Parse lines of output from `pip freeze`, which are structured as
   # _package_==_version_.
@@ -44,11 +44,15 @@ Puppet::Type.type(:package).provide :pip,
     return nil
   end
 
+  def mirror
+    @resource[:install_options].first ||  "http://pypi.python.org/pypi"
+  end
+
   # Ask the PyPI API for the latest version number.  There is no local
   # cache of PyPI's package list so this operation will always have to
   # ask the web service.
   def latest
-    client = XMLRPC::Client.new2("http://pypi.python.org/pypi")
+    client = XMLRPC::Client.new2(mirror)
     client.http_header_extra = {"Content-Type" => "text/xml"}
     result = client.call("package_releases", @resource[:name])
     result.first
@@ -59,7 +63,7 @@ Puppet::Type.type(:package).provide :pip,
   # parameter, an SCM revision.  In that case, the source parameter
   # gives the fully-qualified URL to the repository.
   def install
-    args = %w{install -q}
+    args = ['install', '-i', mirror, '-q']
     if @resource[:source]
       args << "-e"
       if String === @resource[:ensure]

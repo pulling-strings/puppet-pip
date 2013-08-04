@@ -5,7 +5,8 @@ include Puppet::Util::Package
 Puppet::Type.type(:package).provide(:easypip,
             :parent => ::Puppet::Provider::Package) do
 
-    has_feature :ensurable,:versionable
+    
+    has_feature :ensurable,:versionable, :install_options
 
     commands:easy_install=>"/usr/bin/easy_install"
     desc "Python packages Installation via `easy_install` and Uninstallation via 'pip'."
@@ -61,52 +62,56 @@ Puppet::Type.type(:package).provide(:easypip,
         return nil
     end
 
-    def install
-      debug("Installing!!")
-      args = %w{-v}
-      name = @resource[:name]
+    def mirror
+     @resource[:install_options].first ||  "http://pypi.python.org/pypi"
+    end
 
-      source = @resource[:name] 
-      case @resource[:ensure]
-        when String
-          args << source
-        when :present
-          args << source
-          #for advanced versions, we might have to add features like latest or holdable. This case branch would be useful then.
-      end
-      ezy_install *args
+    def install
+	debug("Installing!!")
+	args = ['-i', "#{mirror}/simple" ,'-v']
+	name = @resource[:name]
+
+	source = @resource[:name] 
+	case @resource[:ensure]
+	when String
+	  args << source
+	when :present
+	  args << source
+	  #for advanced versions, we might have to add features like latest or holdable. This case branch would be useful then.
+	end
+	ezy_install *args
     end
 
     def uninstall
-       name = extractname @resource[:name]
-       PiP "uninstall", "-y", "-q", name
+	name = extractname @resource[:name]
+	PiP "uninstall", "-y", "-q", name
     end
 
     private 
     # executes easy_install command with the passed arguments
     def ezy_install(*args)
-      easy_install *args
-      rescue NoMethodError => e
+	easy_install *args
+    rescue NoMethodError => e
 
-      if pathname = which('easy_install')
-         self.class.commands :easy_install => pathname
-         easy_install *args
-      else
-         raise e
-      end
+	if pathname = which('easy_install')
+	  self.class.commands :easy_install => pathname
+	  easy_install *args
+	else
+	  raise e
+	end
     end
 
     # executes pip command with the passed arguments
     def PiP(*args)
-      pip *args
-      rescue NoMethodError => e
+	pip *args
+    rescue NoMethodError => e
 
-      if pathname = which('pip')
-         self.class.commands :pip => pathname
-         pip *args
-      else
-         raise e
-      end
+	if pathname = which('pip')
+	  self.class.commands :pip => pathname
+	  pip *args
+	else
+	  raise e
+	end
     end
-    end
+end
 
