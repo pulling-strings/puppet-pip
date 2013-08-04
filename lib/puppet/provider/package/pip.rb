@@ -63,7 +63,7 @@ Puppet::Type.type(:package).provide :pip,
   # parameter, an SCM revision.  In that case, the source parameter
   # gives the fully-qualified URL to the repository.
   def install
-    args = ['install', '-i', mirror, '-q']
+    args = ['install', '-i', "#{mirror}/simple" , '-q']
     if @resource[:source]
       args << "-e"
       if String === @resource[:ensure]
